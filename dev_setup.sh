@@ -8,11 +8,11 @@ pip install -U ninja h5py pyyaml sharedarray tensorboard tensorboardx \
   yapf addict einops scipy plyfile termcolor timm lightning
 
 pip install -U torch-cluster torch-scatter torch-sparse -f https://data.pyg.org/whl/torch-2.5.1+cu124.html
+pip install -U xformers --index-url https://download.pytorch.org/whl/cu124
 
-pip install -U transformers diffusers omegaconf xformers accelerate \
-  safetensors bitsandbytes wandb jaxtyping typeguard pillow matplotlib \
-  opencv-python imageio torchdyn lpips torch-geometric open3d openexr \
-  trimesh
+pip install -U transformers diffusers omegaconf accelerate safetensors \
+  bitsandbytes wandb jaxtyping typeguard pillow matplotlib opencv-python \
+  imageio torchdyn lpips torch-geometric open3d openexr trimesh
 
 pip install -U git+https://github.com/Pointcept/Pointcept.git#subdirectory=libs/pointops
 pip install -U git+https://github.com/NVlabs/nvdiffrast.git
