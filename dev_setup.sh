@@ -7,7 +7,7 @@ pip install -U torch torchvision torchaudio
 pip install -U ninja h5py pyyaml sharedarray tensorboard tensorboardx \
   yapf addict einops scipy plyfile termcolor timm lightning
 
-pip install -U pytorch-cluster pytorch-scatter pytorch-sparse
+pip install -U torch-cluster torch-scatter torch-sparse -f https://data.pyg.org/whl/torch-2.5.1+cu124.html
 
 pip install -U transformers diffusers omegaconf xformers accelerate \
   safetensors bitsandbytes wandb jaxtyping typeguard pillow matplotlib \
@@ -19,4 +19,4 @@ pip install -U git+https://github.com/NVlabs/nvdiffrast.git
 pip install -U git+https://github.com/mit-han-lab/torchsparse.git
 pip install -U flash-attn --no-build-isolation
 
-pip install -U spconv-cu120
+pip install -U spconv-cu124
