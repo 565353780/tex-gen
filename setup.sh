@@ -19,4 +19,5 @@ pip install -U git+https://github.com/NVlabs/nvdiffrast.git
 pip install -U git+https://github.com/mit-han-lab/torchsparse.git
 pip install -U flash-attn --no-build-isolation
 
-pip install -U spconv-cu124
+# important!
+pip install -U spconv-cu118
