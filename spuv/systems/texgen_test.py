@@ -3,6 +3,7 @@ import cv2
 import torch
 import torch.nn.functional as F
 from einops import rearrange
+from PIL import Image
 
 import spuv
 from spuv.utils.misc import get_device
@@ -141,7 +142,21 @@ class TEXGenDiffusion(TEXGenBaseSystem):
 
         # Online rendering the condition image
         background_color = self.render_background_color
-        rgb_cond = render_batched_meshes(self.ctx, mesh, uv_map_gt, mvp_mtx_cond, image_height, image_width, background_color)
+        if True:
+            #FIXME: here need to replace with a SD generated image
+            # 1 x 1 x 512 x 512 x 3
+            rgb_cond = render_batched_meshes(self.ctx, mesh, torch.ones_like(uv_map_gt), mvp_mtx_cond, image_height, image_width, background_color)
+
+            rgb_cond_array = (rgb_cond.squeeze(0).squeeze(0).cpu().numpy() * 255.0).astype(np.uint8)
+
+            image = Image.fromarray(rgb_cond_array)
+            image.show()
+            exit()
+        else:
+            #FIXME: here need to replace with a SD generated image
+            # 1 x 1 x 512 x 512 x 3
+            rgb_cond = render_batched_meshes(self.ctx, mesh, uv_map_gt, mvp_mtx_cond, image_height, image_width, background_color)
+
 
         if self.cfg.cond_rgb_perturb and self.training:
             B, Nv, H, W, C = rgb_cond.shape
@@ -150,7 +165,7 @@ class TEXGenDiffusion(TEXGenBaseSystem):
             rgb_cond = rearrange(rgb_cond, "(B Nv) C H W -> B Nv H W C", B=B, Nv=Nv)
 
         prompt = batch["prompt"]
-        
+
         text_embeddings = self.image_tokenizer.process_text(prompt).to(dtype=self.dtype)
         image_embeddings = self.image_tokenizer.process_image(rgb_cond).to(dtype=self.dtype)
 
@@ -324,7 +339,7 @@ class TEXGenDiffusion(TEXGenBaseSystem):
             )
 
             render_images[key] = torch.clamp(rearrange(render_out, "B V H W C -> (B V) C H W"), min=0, max=1)
-        
+
     def test_pipeline(self, batch):
         diffusion_data = self.prepare_diffusion_data(batch)
         condition_info = self.prepare_condition_info(batch)
